@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f3ee" />
+    <meta name="description" content="基于公开构型的 AL-31F 双转子加力涡扇发动机交互图谱。剖切、分解、部件探索，以及明确标注为近似模型的实时流动与温度可视化。" />
+    <title>AL-31F · 航空发动机交互图谱</title>
+    <script type="module" crossorigin src="./assets/index-Ci6YPfYt.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BZCafDsk.css">
+  </head>
+  <body>
+    <svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+      <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+      <symbol id="icon-cube" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M12 13 3 8m9 5v9M7.5 5.5l9 5"/></symbol>
+      <symbol id="icon-cut" viewBox="0 0 24 24"><path d="M4 8 12 3l8 5v9l-8 5-8-5V8Zm8 5 8-5M12 13v9M2 12l20-5M4 8l8 5"/></symbol>
+      <symbol id="icon-explode" viewBox="0 0 24 24"><path d="m12 2 8 4-8 4-8-4 8-4ZM4 12l8 4 8-4M4 18l8 4 8-4M12 12v-2M12 18v-2"/></symbol>
+      <symbol id="icon-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 1 7M3 4v6h6"/></symbol>
+      <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-4-1-7-1-10 1Zm0 0v15M5 8h4M5 12h4m6-4h4m-4 4h4"/></symbol>
+      <symbol id="icon-cross" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    </defs></svg>
+    <a class="skip-link" href="#workspace">跳转至交互工作台</a>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="AL-31F 发动机交互图谱首页">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14"/><circle cx="18" cy="18" r="4"/><path d="m18 4 4 10M32 18l-10 4M18 32l-4-10M4 18l10-4M8 8l10 6m10-6-6 10m6 10-10-6M8 28l6-10"/></svg></span>
+        <span class="brand-wordmark">ENGINE ATLAS<span>航空发动机交互图谱</span></span>
+      </a>
+      <div class="topbar-center"><span class="tiny-cross">+</span> PROPULSION / 001 <span class="topbar-divider"></span> AL-31F</div>
+      <button id="sources-open" class="button subtle"><svg class="icon"><use href="#icon-book"/></svg>构型与资料依据<svg class="icon small"><use href="#icon-arrow"/></svg></button>
+    </header>
+
+    <main class="app-layout">
+      <aside class="sidebar" aria-label="发动机部件浏览">
+        <section class="engine-heading">
+          <div class="eyebrow"><span class="green-dash"></span> TURBOFAN ENGINE</div>
+          <h1>AL-31F<span>АЛ-31Ф</span></h1>
+          <p>双转子 · 加力式涡扇发动机</p>
+          <div class="construction-tag"><span class="status-dot"></span>公开构型重建</div>
+        </section>
+
+        <nav class="parts-nav" aria-label="选择发动机部件">
+          <div class="section-heading"><h2>结构目录</h2><span>08 COMPONENTS</span></div>
+          <div id="parts">
+            <button data-part="0" class="part-button active" aria-pressed="true"><span class="part-number">01</span><span class="part-name">低压压气机<small>LOW-PRESSURE COMPRESSOR</small></span><span class="stage-count">4 级</span></button>
+            <button data-part="1" class="part-button" aria-pressed="false"><span class="part-number">02</span><span class="part-name">高压压气机<small>HIGH-PRESSURE COMPRESSOR</small></span><span class="stage-count">9 级</span></button>
+            <button data-part="2" class="part-button" aria-pressed="false"><span class="part-number">03</span><span class="part-name">环形燃烧室<small>ANNULAR COMBUSTOR</small></span><span class="part-arrow">↗</span></button>
+            <button data-part="3" class="part-button" aria-pressed="false"><span class="part-number">04</span><span class="part-name">高压涡轮<small>HIGH-PRESSURE TURBINE</small></span><span class="stage-count">1 级</span></button>
+            <button data-part="4" class="part-button" aria-pressed="false"><span class="part-number">05</span><span class="part-name">低压涡轮<small>LOW-PRESSURE TURBINE</small></span><span class="stage-count">1 级</span></button>
+            <button data-part="5" class="part-button" aria-pressed="false"><span class="part-number">06</span><span class="part-name">混合器<small>FLOW MIXER</small></span><span class="part-arrow">↗</span></button>
+            <button data-part="6" class="part-button" aria-pressed="false"><span class="part-number">07</span><span class="part-name">加力燃烧室<small>AFTERBURNER</small></span><span class="part-arrow">↗</span></button>
+            <button data-part="7" class="part-button" aria-pressed="false"><span class="part-number">08</span><span class="part-name">可调收扩喷管<small>VARIABLE C-D NOZZLE</small></span><span class="part-arrow">↗</span></button>
+          </div>
+        </nav>
+
+        <section class="part-detail" aria-labelledby="part-title">
+          <span id="part-tag" class="eyebrow">01 / COLD SECTION</span>
+          <h2 id="part-title">低压压气机</h2>
+          <p id="part-desc">四级轴流式低压压气机。气流在此增压，随后分为进入核心机的内涵气流与沿外涵道流动的旁通气流。</p>
+          <div class="detail-actions"><button id="isolate" class="button primary">单独查看<svg class="icon small"><use href="#icon-arrow"/></svg></button><button id="show-all" class="button text-button">显示全部</button></div>
+          <div id="subpart-control" hidden><label for="subpart">叶排 / 零件细分</label><select id="subpart"><option value="-1">全部叶排与支承结构</option></select></div>
+        </section>
+        <div class="sidebar-footer"><span>STRUCTURE → FLOW → HEAT</span><span>模型 / v1.0</span></div>
+      </aside>
+
+      <section class="workspace" id="workspace" aria-label="发动机三维交互工作台">
+        <div class="viewer-header">
+          <div><span class="eyebrow">INTERACTIVE ENGINE STUDY</span><h2>从构型，看见动力。</h2></div>
+          <div class="model-facts"><span>4 + 9 级压气机</span><span>双转子</span><span>1 + 1 级涡轮</span></div>
+        </div>
+
+        <div class="stage">
+          <div id="viewport" role="img" aria-label="AL-31F 三维发动机模型，可拖动旋转、滚轮缩放；也可使用视角按钮选择标准视图"></div>
+          <div id="label-layer" aria-hidden="true"></div>
+          <div id="loading" role="status"><span class="loading-orbit"></span><strong>正在构建发动机</strong><span>载入三维构型与流动可视化</span></div>
+          <div class="stage-topline"><div class="live-status"><span class="status-dot"></span><span id="status-text">正在加载模型</span></div><span class="model-id">AL-31F / 3D STUDY</span></div>
+          <div class="mode-switch" role="group" aria-label="模型展示模式">
+            <button data-mode="assembled" aria-pressed="false"><svg class="icon"><use href="#icon-cube"/></svg>完整模型</button>
+            <button data-mode="cutaway" class="active" aria-pressed="true"><svg class="icon"><use href="#icon-cut"/></svg>剖切展示</button>
+            <button data-mode="exploded" aria-pressed="false"><svg class="icon"><use href="#icon-explode"/></svg>分解视图</button>
+          </div>
+          <div class="stage-readouts" aria-label="演示状态"><div><span>峰值温度 / 估算</span><strong id="temp-value">—<small>K</small></strong></div><div><span>流动显示</span><strong id="flow-value">实时粒子</strong></div></div>
+          <div class="temperature-legend"><div class="legend-heading"><span>温度映射</span><span>K</span></div><div class="temperature-gradient"></div><div class="temperature-ticks"><span>288</span><span>600</span><span>1000</span><span>1500</span><span>2100</span></div></div>
+          <div class="view-controls" role="group" aria-label="摄像机标准视角"><button data-view="perspective" class="active" aria-pressed="true">透视</button><button data-view="side" aria-pressed="false">侧视</button><button data-view="front" aria-pressed="false">前视</button><span></span><button id="reset" class="icon-button" aria-label="复位视角" title="复位视角"><svg class="icon"><use href="#icon-reset"/></svg></button></div>
+          <div class="interaction-hint"><span class="mouse-glyph" aria-hidden="true"></span>拖动旋转<span>·</span>滚轮缩放<span>·</span>点击部件查看</div>
+          <span class="frame-mark top-left" aria-hidden="true"></span><span class="frame-mark bottom-right" aria-hidden="true"></span>
+        </div>
+
+        <section class="control-deck" aria-label="可视化参数控制">
+          <div class="geometry-controls control-section">
+            <div class="section-heading"><h2>观察方式</h2><span>GEOMETRY</span></div>
+            <div class="range-group"><label for="cut">剖切位置 <output id="cut-value" for="cut">z = +0.12</output></label><input id="cut" type="range" min="-1" max="1" step="0.01" value="0.12" /><div class="range-endpoints"><span>背侧</span><span>前侧</span></div></div>
+            <div class="range-group"><label for="explode">部件分离 <output id="explode-value" for="explode">60%</output></label><input id="explode" type="range" min="0" max="1" step="0.01" value="0.6" /></div>
+            <label class="switch-row" for="labels"><span>显示部件标签</span><input type="checkbox" id="labels" checked /><span class="switch" aria-hidden="true"></span></label>
+          </div>
+          <div class="operation-controls control-section">
+            <div class="section-heading"><h2>运行状态</h2><button id="play" class="play-button" aria-label="暂停或继续发动机运行">暂停运行</button></div>
+            <div class="range-group"><label for="throttle">演示转速 <output id="throttle-value" for="throttle">85%</output></label><input id="throttle" type="range" min="30" max="100" step="1" value="85" /><div class="range-endpoints"><span>低</span><span>高</span></div></div>
+            <div class="operation-switches"><label class="switch-row" for="flow"><span>流动粒子</span><input type="checkbox" id="flow" checked /><span class="switch" aria-hidden="true"></span></label><label class="switch-row" for="afterburner"><span>加力燃烧</span><input type="checkbox" id="afterburner" checked /><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+          <div class="thermal-controls control-section">
+            <div class="section-heading"><h2>沿程温度</h2><span>APPROX. / K</span></div>
+            <div id="station-chart" role="img" aria-label="发动机沿轴向的估算温度变化曲线"></div>
+            <div class="chart-caption"><span>进气</span><span>压缩</span><span>燃烧</span><span>涡轮</span><span>加力 / 排气</span></div>
+            <p class="approximation-note"><span class="info-symbol" aria-hidden="true">i</span>近似流动 · 温度为教学估算，非 CFD 结果</p>
+          </div>
+        </section>
+        <footer class="workspace-footer"><span><span class="status-dot"></span>公开资料约束构型 · 几何与流场采用可视化近似</span><span>WEBGL <span class="footer-divider">/</span> <span id="fps">—</span> FPS</span></footer>
+      </section>
+    </main>
+
+    <dialog id="sources-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><div><span class="eyebrow">SOURCES & MODEL BOUNDARIES</span><h2 id="sources-title">构型依据与模型边界</h2></div><button id="sources-close" class="icon-button" aria-label="关闭资料窗口"><svg class="icon"><use href="#icon-cross"/></svg></button></div><div id="source-content"></div></dialog>
+    <script>
+      window.showEngineLoadError = function () {
+        var panel = document.getElementById('loading');
+        if (!panel || panel.hidden) return;
+        document.getElementById('status-text').textContent = '模型加载失败';
+        panel.innerHTML = '<strong>三维模型未能加载</strong><span>可能是脚本缓存或网络读取失败，请重新加载。</span><button class="button primary" id="retry-load">重新加载</button>';
+        document.getElementById('retry-load').onclick = function () { var url = new URL(location.href); url.searchParams.set('reload', Date.now()); location.replace(url.href); };
+      };
+      window.engineLoadingTimeout = setTimeout(window.showEngineLoadError, 20000);
+    </script>
+  </body>
+</html>
