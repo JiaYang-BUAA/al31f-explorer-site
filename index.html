@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f3f3ee" />
-    <meta name="description" content="航空发动机交互图谱：切换 AL-31F、J79-GE-15、CFM56-7B 与 GE90-115B，探索公开构型、剖切、部件分解与明确标注为近似模型的实时流动和温度可视化。" />
-    <title>航空发动机交互图谱 · ENGINE ATLAS</title>
-    <script type="module" crossorigin src="./assets/index-BT3b4eLd.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DfNec2qb.css">
+    <meta name="description" content="航空发动机交互图谱：七款经典发动机，双机比较、轴系联动、慢动作、气流导览、截面探针与公开资料对照。几何与热力过程为明确标注的教学近似模型。" />
+    <title>航空发动机交互图谱 · ENGINE ATLAS</title>
+    <script type="module" crossorigin src="./assets/index-DS9moFBe.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BFkSLjEl.css">
   </head>
   <body>
     <svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -57,20 +57,21 @@
           <h2 id="part-title">低压压气机</h2>
           <p id="part-desc">四级轴流式低压压气机。气流在此增压，随后分为进入核心机的内涵气流与沿外涵道流动的旁通气流。</p>
           <div class="detail-actions"><button id="isolate" class="button primary">单独查看<svg class="icon small"><use href="#icon-arrow"/></svg></button><button id="show-all" class="button text-button">显示全部</button></div>
+          <button id="part-evidence-open" class="button evidence-button"><svg class="icon"><use href="#icon-book"/></svg>这个部件的资料依据</button>
           <div id="subpart-control" hidden><label for="subpart">叶排 / 零件细分</label><select id="subpart"><option value="-1">全部叶排与支承结构</option></select></div>
         </section>
-        <div class="sidebar-footer"><span>STRUCTURE → FLOW → HEAT</span><span>模型 / v2.0</span></div>
+        <div class="sidebar-footer"><span>STRUCTURE → FLOW → HEAT</span><span>模型 / v3.0</span></div>
       </aside>
 
       <section class="workspace" id="workspace" aria-label="发动机三维交互工作台">
         <section class="engine-library" id="engine-library" aria-label="选择发动机">
-          <div class="engine-library-heading"><h2><label for="engine-select">选择发动机型号</label></h2><span>SELECT ENGINE / 04</span></div>
+          <div class="engine-library-heading"><h2><label for="engine-select">选择发动机型号</label></h2><span id="engine-library-count">SELECT ENGINE / 07</span></div>
           <div class="engine-selection-row"><select id="engine-select" aria-describedby="engine-summary">
             <option value="al31f">AL-31F · 双转子加力涡扇</option>
             <option value="j79">J79-GE-15 · 单转子加力涡喷</option>
             <option value="cfm56">CFM56-7B26 · 大涵道比涡扇</option>
             <option value="ge90">GE90-115B · 大涵道比涡扇</option>
-          </select><div id="fan-scale" hidden></div></div>
+          </select><button id="compare-toggle" class="button" aria-pressed="false" aria-controls="compare-pane">双机对比</button><div id="fan-scale" hidden></div></div>
           <p id="engine-summary" aria-live="polite" aria-atomic="true">AL-31F：双转子加力涡扇，探索核心流路、外涵道与加力燃烧室。</p>
         </section>
         <div class="viewer-header">
@@ -78,7 +79,7 @@
           <div class="model-facts" id="model-facts"><span>4 + 9 级压气机</span><span>双转子</span><span>1 + 1 级涡轮</span></div>
         </div>
 
-        <div class="stage">
+        <div id="viewer-grid" class="viewer-grid"><div class="stage" id="primary-stage">
           <div id="viewport" role="img" aria-label="AL-31F 三维发动机模型，可拖动旋转、滚轮缩放；也可使用视角按钮选择标准视图"></div>
           <div id="label-layer" aria-hidden="true"></div>
           <div id="loading" role="status"><span class="loading-orbit"></span><strong>正在构建发动机</strong><span>载入三维构型与流动可视化</span></div>
@@ -88,12 +89,13 @@
             <button data-mode="cutaway" class="active" aria-pressed="true"><svg class="icon"><use href="#icon-cut"/></svg>剖切展示</button>
             <button data-mode="exploded" aria-pressed="false"><svg class="icon"><use href="#icon-explode"/></svg>分解视图</button>
           </div>
-          <div class="stage-readouts" aria-label="演示状态"><div><span>峰值温度 / 估算</span><strong id="temp-value">—<small>K</small></strong></div><div><span>流动显示</span><strong id="flow-value">实时粒子</strong></div></div>
-          <div class="temperature-legend"><div class="legend-heading"><span>温度映射</span><span>K</span></div><div class="temperature-gradient"></div><div class="temperature-ticks"><span>288</span><span>600</span><span>1000</span><span>1500</span><span>2100</span></div></div>
+          <div class="stage-readouts" aria-label="演示状态"><div><span>峰值总温 / 教学</span><strong id="temp-value">—<small>K</small></strong></div><div><span>流动显示</span><strong id="flow-value">实时粒子</strong></div></div>
+          <div class="temperature-legend"><div class="legend-heading"><span>总温映射 · 教学</span><span>K</span></div><div class="temperature-gradient"></div><div class="temperature-ticks"><span>288</span><span>600</span><span>1000</span><span>1500</span><span>2100</span></div></div>
           <div class="view-controls" role="group" aria-label="摄像机标准视角"><button data-view="perspective" class="active" aria-pressed="true">透视</button><button data-view="side" aria-pressed="false">侧视</button><button data-view="front" aria-pressed="false">前视</button><span></span><button id="reset" class="icon-button" aria-label="复位视角" title="复位视角"><svg class="icon"><use href="#icon-reset"/></svg></button></div>
           <div class="interaction-hint"><span class="mouse-glyph" aria-hidden="true"></span>拖动旋转<span>·</span>滚轮缩放<span>·</span>点击部件查看</div>
+          <div id="tour-overlay" class="tour-overlay" hidden><div><span class="eyebrow">FOLLOW THE AIR</span><strong id="tour-overlay-label">流路导览</strong><p id="tour-overlay-copy"></p></div><div class="tour-overlay-actions"><button id="tour-overlay-play" class="play-button">暂停</button><button id="tour-overlay-stop" class="play-button">退出</button></div></div>
           <span class="frame-mark top-left" aria-hidden="true"></span><span class="frame-mark bottom-right" aria-hidden="true"></span>
-        </div>
+        </div><section id="compare-pane" class="compare-pane" aria-label="对比发动机三维视图" hidden><div class="compare-heading"><label for="compare-select">对比机型</label><select id="compare-select"></select></div><div class="compare-stage"><div id="compare-viewport" role="img" aria-label="对比发动机，可拖动同步视角"></div><div id="compare-loading" class="compare-loading" role="status" hidden>正在构建对比模型…</div><div id="compare-caption" class="compare-caption"></div></div><div id="compare-facts" class="compare-facts"></div><p class="compare-note">视角、剖切与分解同步 · 两模型分别适配窗口，非同尺度</p></section></div>
 
         <section class="control-deck" aria-label="可视化参数控制">
           <div class="geometry-controls control-section">
@@ -104,21 +106,28 @@
           </div>
           <div class="operation-controls control-section">
             <div class="section-heading"><h2>运行状态</h2><button id="play" class="play-button" aria-label="暂停或继续发动机运行">暂停运行</button></div>
-            <div class="range-group"><label for="throttle">演示转速 <output id="throttle-value" for="throttle">85%</output></label><input id="throttle" type="range" min="30" max="100" step="1" value="85" /><div class="range-endpoints"><span>低</span><span>高</span></div></div>
+            <div class="range-group"><label for="throttle">教学工况 <output id="throttle-value" for="throttle">85%</output></label><input id="throttle" type="range" min="30" max="100" step="1" value="85" /><div class="range-endpoints"><span>低功率</span><span>高功率</span></div></div>
+            <div class="range-group"><label for="animation-speed">观察速度 <output id="animation-speed-value" for="animation-speed">1.00×</output></label><input id="animation-speed" type="range" min="0.05" max="2" step="0.05" value="1" /></div><div class="playback-row"><span>仅改变动画速度</span><button id="step-frame" class="play-button" title="暂停后前进一个演示时间步">逐帧前进</button></div>
             <div class="operation-switches"><label class="switch-row" for="flow"><span>流动粒子</span><input type="checkbox" id="flow" checked /><span class="switch" aria-hidden="true"></span></label><label class="switch-row" id="afterburner-control" for="afterburner"><span>加力燃烧</span><input type="checkbox" id="afterburner" checked /><span class="switch" aria-hidden="true"></span></label></div>
           </div>
           <div class="thermal-controls control-section">
-            <div class="section-heading"><h2>沿程温度</h2><span>APPROX. / K</span></div>
+            <div class="section-heading"><h2>沿程总温</h2><span>APPROX. / K</span></div>
             <div id="station-chart" role="img" aria-label="发动机沿轴向的估算温度变化曲线"></div>
             <div class="chart-caption"><span>进气</span><span>压缩</span><span>燃烧</span><span>涡轮</span><span id="chart-exit-label">加力 / 排气</span></div>
-            <p class="approximation-note"><span class="info-symbol" aria-hidden="true">i</span>近似流动 · 温度为教学估算，非 CFD 结果</p>
+            <p class="approximation-note"><span class="info-symbol" aria-hidden="true">i</span>近似流动 · 总温为教学估算，非 CFD 结果</p>
           </div>
         </section>
+        <details class="explorer-lab" id="explorer-lab" open><summary><span><span class="eyebrow">EXPLORE THE CYCLE</span><strong>探索实验室</strong></span><span class="lab-summary-note">轴系 · 气流导览 · 热力探针</span></summary><div class="lab-grid">
+          <section class="lab-card" aria-labelledby="shaft-title"><div class="section-heading"><h2 id="shaft-title">轴系联动</h2><span>SHAFT SYSTEM</span></div><label class="switch-row" for="shaft-mode"><span>按动力轴系着色</span><input id="shaft-mode" type="checkbox"/><span class="switch" aria-hidden="true"></span></label><div id="spool-legend" class="spool-legend"></div><p id="spool-description" class="lab-help">点选转子部件，查看与它联动的压气机、轴和涡轮。</p><div id="vector-control" class="range-group" hidden><label for="nozzle-angle">喷口偏转 <output id="nozzle-angle-value" for="nozzle-angle">0° · 向后</output></label><input id="nozzle-angle" type="range" min="0" max="90" step="1" value="0"/><div class="range-endpoints"><span>巡航方向</span><span>垂直向下</span></div><p class="lab-help">四喷口机械联动示意，箭头表示喷流方向。</p></div></section>
+          <section class="lab-card" aria-labelledby="tour-title"><div class="section-heading"><h2 id="tour-title">跟随一团空气</h2><span>FLOW TOUR</span></div><label class="field-label" for="tour-route">导览流路</label><select id="tour-route" class="lab-select"><option value="core">核心流路</option><option value="bypass">外涵流路</option></select><div class="range-group"><label for="tour-progress">沿流路位置 <output id="tour-progress-value" for="tour-progress">0%</output></label><input id="tour-progress" type="range" min="0" max="1" step="0.005" value="0"/></div><div class="lab-actions"><button id="tour-play" class="button primary">开始导览</button><button id="tour-stop" class="button">退出导览</button></div><p id="tour-station" class="tour-station" aria-live="polite">选择流路，沿真实构型的近似通道前进。</p><p id="tour-explanation" class="lab-help">镜头会跟随标记，按进气、压缩、燃烧、涡轮与排气逐段讲解。</p></section>
+          <section class="lab-card probe-card" aria-labelledby="probe-title"><div class="section-heading"><h2 id="probe-title">流路截面探针</h2><span>STATION PROBE</span></div><div class="probe-controls"><label class="switch-row" for="probe-enabled"><span>显示三维截面</span><input id="probe-enabled" type="checkbox"/><span class="switch" aria-hidden="true"></span></label><label class="field-label" for="probe-route">探针流路</label><select id="probe-route" class="lab-select"><option value="core">核心流路</option><option value="bypass">外涵流路</option></select></div><div class="range-group"><label for="probe-progress">截面位置 <output id="probe-progress-value" for="probe-progress">50%</output></label><input id="probe-progress" type="range" min="0" max="1" step="0.005" value="0.5"/></div><div class="probe-readouts"><div><span>总温 / K · 教学</span><strong id="probe-temperature">—</strong></div><div><span>总压 / kPa · 教学</span><strong id="probe-pressure">—</strong></div><div><span>所处部位</span><strong id="probe-station">—</strong></div></div><div id="probe-chart" class="probe-chart"></div><div class="probe-chart-key"><span><i class="temperature-key"></i>总温 · 左轴 K</span><span><i class="pressure-key"></i>总压 · 右轴 kPa</span></div><p class="lab-help">站位模型插值；压力由教学效率与压力损失假设计算，非实测或 CFD。截面为流路定位示意。</p></section>
+        </div></details>
         <footer class="workspace-footer"><span><span class="status-dot"></span>公开资料约束构型 · 几何与流场采用可视化近似</span><span>WEBGL <span class="footer-divider">/</span> <span id="fps">—</span> FPS</span></footer>
       </section>
     </main>
 
     <dialog id="sources-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><div><span class="eyebrow">SOURCES & MODEL BOUNDARIES</span><h2 id="sources-title">构型依据与模型边界</h2></div><button id="sources-close" class="icon-button" aria-label="关闭资料窗口"><svg class="icon"><use href="#icon-cross"/></svg></button></div><div id="source-content"></div></dialog>
+    <dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-heading"><div><span class="eyebrow">PART & REFERENCE</span><h2 id="evidence-title">部件与资料对照</h2></div><button id="evidence-close" class="icon-button" aria-label="关闭部件资料"><svg class="icon"><use href="#icon-cross"/></svg></button></div><div id="part-evidence-content"></div></dialog>
     <script>
       window.showEngineLoadError = function () {
         var panel = document.getElementById('loading');
