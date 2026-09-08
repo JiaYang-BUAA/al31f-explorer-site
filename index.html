@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#f3f3ee" />
     <meta name="description" content="航空发动机交互图谱：切换 AL-31F、J79-GE-15、CFM56-7B 与 GE90-115B，探索公开构型、剖切、部件分解与明确标注为近似模型的实时流动和温度可视化。" />
     <title>航空发动机交互图谱 · ENGINE ATLAS</title>
-    <script type="module" crossorigin src="./assets/index-Cga3w_Jf.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-IlDfCcnN.css">
+    <script type="module" crossorigin src="./assets/index-BT3b4eLd.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DfNec2qb.css">
   </head>
   <body>
     <svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -65,12 +65,12 @@
       <section class="workspace" id="workspace" aria-label="发动机三维交互工作台">
         <section class="engine-library" id="engine-library" aria-label="选择发动机">
           <div class="engine-library-heading"><h2><label for="engine-select">选择发动机型号</label></h2><span>SELECT ENGINE / 04</span></div>
-          <select id="engine-select" aria-describedby="engine-summary">
+          <div class="engine-selection-row"><select id="engine-select" aria-describedby="engine-summary">
             <option value="al31f">AL-31F · 双转子加力涡扇</option>
             <option value="j79">J79-GE-15 · 单转子加力涡喷</option>
             <option value="cfm56">CFM56-7B26 · 大涵道比涡扇</option>
             <option value="ge90">GE90-115B · 大涵道比涡扇</option>
-          </select>
+          </select><div id="fan-scale" hidden></div></div>
           <p id="engine-summary" aria-live="polite" aria-atomic="true">AL-31F：双转子加力涡扇，探索核心流路、外涵道与加力燃烧室。</p>
         </section>
         <div class="viewer-header">
