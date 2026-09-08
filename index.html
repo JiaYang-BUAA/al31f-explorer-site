@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f3f3ee" />
     <meta name="description" content="航空发动机交互图谱：七款经典发动机，双机比较、轴系联动、慢动作、气流导览、截面探针与公开资料对照。几何与热力过程为明确标注的教学近似模型。" />
     <title>航空发动机交互图谱 · ENGINE ATLAS</title>
-    <script type="module" crossorigin src="./assets/index-DS9moFBe.js"></script>
+    <script type="module" crossorigin src="./assets/index-C1bYv2bd.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BFkSLjEl.css">
   </head>
   <body>
@@ -81,7 +81,7 @@
 
         <div id="viewer-grid" class="viewer-grid"><div class="stage" id="primary-stage">
           <div id="viewport" role="img" aria-label="AL-31F 三维发动机模型，可拖动旋转、滚轮缩放；也可使用视角按钮选择标准视图"></div>
-          <div id="label-layer" aria-hidden="true"></div>
+          <div id="label-layer" aria-hidden="true" hidden></div>
           <div id="loading" role="status"><span class="loading-orbit"></span><strong>正在构建发动机</strong><span>载入三维构型与流动可视化</span></div>
           <div class="stage-topline"><div class="live-status"><span class="status-dot"></span><span id="status-text">正在加载模型</span></div><span class="model-id" id="model-id">AL-31F / 3D STUDY</span></div>
           <div class="mode-switch" role="group" aria-label="模型展示模式">
@@ -102,7 +102,7 @@
             <div class="section-heading"><h2>观察方式</h2><span>GEOMETRY</span></div>
             <div class="range-group"><label for="cut">剖切位置 <output id="cut-value" for="cut">z = +0.12</output></label><input id="cut" type="range" min="-1" max="1" step="0.01" value="0.12" /><div class="range-endpoints"><span>背侧</span><span>前侧</span></div></div>
             <div class="range-group"><label for="explode">部件分离 <output id="explode-value" for="explode">60%</output></label><input id="explode" type="range" min="0" max="1" step="0.01" value="0.6" /></div>
-            <label class="switch-row" for="labels"><span>显示部件标签</span><input type="checkbox" id="labels" checked /><span class="switch" aria-hidden="true"></span></label>
+            <label class="switch-row" for="labels"><span>显示部件标签</span><input type="checkbox" id="labels" /><span class="switch" aria-hidden="true"></span></label>
           </div>
           <div class="operation-controls control-section">
             <div class="section-heading"><h2>运行状态</h2><button id="play" class="play-button" aria-label="暂停或继续发动机运行">暂停运行</button></div>
